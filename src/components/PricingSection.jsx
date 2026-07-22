@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck, FileText, Sparkles, AlertTriangle, Clock, ShieldAlert, Award } from 'lucide-react';
+import { trackEvent, buildCheckoutUrl } from '../utils/analytics';
 
 export default function PricingSection() {
   const [selectedTab, setSelectedTab] = useState('padrao'); // 'padrao' or 'sem-risco'
 
+  const KIWIFY_MENSAL_BASE = 'https://pay.kiwify.com.br/D9E2ZlE';
+  const KIWIFY_TRIMESTRAL_BASE = 'https://pay.kiwify.com.br/D9E2ZlE'; // Update with trimestral link when created
+
   const handleCheckoutMensal = () => {
-    window.location.href = 'https://pay.kiwify.com.br/D9E2ZlE';
+    trackEvent('InitiateCheckout', {
+      plan: 'Mensal',
+      price: 297,
+      currency: 'BRL',
+    });
+    const finalUrl = buildCheckoutUrl(KIWIFY_MENSAL_BASE);
+    window.location.href = finalUrl;
   };
 
   const handleCheckoutTrimestral = () => {
-    window.location.href = 'https://pay.kiwify.com.br/D9E2ZlE'; // Or trimestral link when available
+    trackEvent('InitiateCheckout', {
+      plan: 'Trimestral',
+      price: 697,
+      currency: 'BRL',
+    });
+    const finalUrl = buildCheckoutUrl(KIWIFY_TRIMESTRAL_BASE);
+    window.location.href = finalUrl;
+  };
+
+  const handleTabChange = (tabName) => {
+    setSelectedTab(tabName);
+    trackEvent('view_pricing_tab', { tab: tabName });
   };
 
   return (
@@ -37,7 +58,7 @@ export default function PricingSection() {
           <div className="pt-4 flex items-center justify-center">
             <div className="inline-flex p-1.5 rounded-2xl bg-slate-900 border border-slate-800 shadow-inner">
               <button
-                onClick={() => setSelectedTab('padrao')}
+                onClick={() => handleTabChange('padrao')}
                 className={`px-5 py-2.5 rounded-xl font-display text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                   selectedTab === 'padrao'
                     ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20'
@@ -47,7 +68,7 @@ export default function PricingSection() {
                 Planos Padrão (Mensal & Trimestral)
               </button>
               <button
-                onClick={() => setSelectedTab('sem-risco')}
+                onClick={() => handleTabChange('sem-risco')}
                 className={`px-5 py-2.5 rounded-xl font-display text-xs sm:text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   selectedTab === 'sem-risco'
                     ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20'
