@@ -1,7 +1,7 @@
 import React from 'react';
-import { ShieldCheck, Lock, FileText, ArrowUp, AlertTriangle } from 'lucide-react';
+import { ShieldCheck, Lock, FileText, ArrowUp, AlertTriangle, BarChart3 } from 'lucide-react';
 
-export default function Footer() {
+export default function Footer({ onOpenAnalytics }) {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -61,6 +61,17 @@ export default function Footer() {
               <li>
                 <a href="#planos" className="hover:text-emerald-400 transition-colors">Planos & Assinatura</a>
               </li>
+              {onOpenAnalytics && (
+                <li className="pt-2">
+                  <button 
+                    onClick={onOpenAnalytics}
+                    className="text-emerald-400 hover:text-emerald-300 font-mono font-bold flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <BarChart3 className="w-3.5 h-3.5" />
+                    <span>Painel de Métricas & Cliques</span>
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
 
