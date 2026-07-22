@@ -4,6 +4,14 @@ import { ArrowRight, CheckCircle2, ShieldCheck, FileText, Sparkles, AlertTriangl
 export default function PricingSection() {
   const [selectedTab, setSelectedTab] = useState('padrao'); // 'padrao' or 'sem-risco'
 
+  const handleCheckoutMensal = () => {
+    window.location.href = 'https://pay.kiwify.com.br/D9E2ZlE';
+  };
+
+  const handleCheckoutTrimestral = () => {
+    window.location.href = 'https://pay.kiwify.com.br/D9E2ZlE'; // Or trimestral link when available
+  };
+
   return (
     <section id="planos" className="py-24 bg-[#06080d] relative overflow-hidden border-b border-slate-800/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,7 +38,7 @@ export default function PricingSection() {
             <div className="inline-flex p-1.5 rounded-2xl bg-slate-900 border border-slate-800 shadow-inner">
               <button
                 onClick={() => setSelectedTab('padrao')}
-                className={`px-5 py-2.5 rounded-xl font-display text-xs sm:text-sm font-bold transition-all ${
+                className={`px-5 py-2.5 rounded-xl font-display text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                   selectedTab === 'padrao'
                     ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20'
                     : 'text-slate-400 hover:text-white'
@@ -40,7 +48,7 @@ export default function PricingSection() {
               </button>
               <button
                 onClick={() => setSelectedTab('sem-risco')}
-                className={`px-5 py-2.5 rounded-xl font-display text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                className={`px-5 py-2.5 rounded-xl font-display text-xs sm:text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   selectedTab === 'sem-risco'
                     ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20'
                     : 'text-slate-400 hover:text-white'
@@ -115,7 +123,7 @@ export default function PricingSection() {
               {/* Action CTA Button */}
               <div className="space-y-3">
                 <button
-                  onClick={() => alert('Garantindo Vaga no Plano Mensal (R$ 297)...')}
+                  onClick={handleCheckoutMensal}
                   className="w-full py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-display font-extrabold text-sm sm:text-base flex items-center justify-center gap-3 shadow-xl shadow-emerald-500/20 hover:shadow-emerald-500/35 transition-all cursor-pointer"
                 >
                   <span>Garantir Vaga no Plano Mensal</span>
@@ -195,7 +203,7 @@ export default function PricingSection() {
               {/* Action CTA Button */}
               <div className="space-y-3">
                 <button
-                  onClick={() => alert('Garantindo Vaga no Plano Trimestral (R$ 697)...')}
+                  onClick={handleCheckoutTrimestral}
                   className="w-full py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-display font-extrabold text-sm sm:text-base flex items-center justify-center gap-3 shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all cursor-pointer"
                 >
                   <span>Garantir Vaga no Plano Trimestral</span>
@@ -304,7 +312,7 @@ export default function PricingSection() {
               </div>
 
               <button
-                onClick={() => alert('Solicitando Acesso ao Plano Sem Risco de Prejuízo (Banca 5k+)...')}
+                onClick={handleCheckoutMensal}
                 className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-display font-extrabold text-sm sm:text-base flex items-center justify-center gap-3 shadow-xl shadow-amber-500/20 transition-all cursor-pointer shrink-0"
               >
                 <span>Quero o Plano Sem Risco de Prejuízo</span>
