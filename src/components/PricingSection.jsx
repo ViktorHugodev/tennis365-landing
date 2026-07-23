@@ -1,31 +1,20 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck, FileText, Sparkles, AlertTriangle, Clock, ShieldAlert, Award } from 'lucide-react';
-import { trackEvent, buildCheckoutUrl } from '../utils/analytics';
+import { trackEvent } from '../utils/analytics';
+import CheckoutModal from './CheckoutModal';
 
 export default function PricingSection() {
   const [selectedTab, setSelectedTab] = useState('padrao'); // 'padrao' or 'sem-risco'
-
-  const KIWIFY_MENSAL_BASE = 'https://pay.kiwify.com.br/D9E2ZlE';
-  const KIWIFY_TRIMESTRAL_BASE = 'https://pay.kiwify.com.br/D9E2ZlE'; // Update with trimestral link when created
+  const [checkoutPlan, setCheckoutPlan] = useState(null); // 'mensal' | 'trimestral' | null
 
   const handleCheckoutMensal = () => {
-    trackEvent('InitiateCheckout', {
-      plan: 'Mensal',
-      price: 297,
-      currency: 'BRL',
-    });
-    const finalUrl = buildCheckoutUrl(KIWIFY_MENSAL_BASE);
-    window.location.href = finalUrl;
+    trackEvent('InitiateCheckout', { plan: 'Mensal', price: 297, currency: 'BRL' });
+    setCheckoutPlan('mensal');
   };
 
   const handleCheckoutTrimestral = () => {
-    trackEvent('InitiateCheckout', {
-      plan: 'Trimestral',
-      price: 697,
-      currency: 'BRL',
-    });
-    const finalUrl = buildCheckoutUrl(KIWIFY_TRIMESTRAL_BASE);
-    window.location.href = finalUrl;
+    trackEvent('InitiateCheckout', { plan: 'Trimestral', price: 697, currency: 'BRL' });
+    setCheckoutPlan('trimestral');
   };
 
   const handleTabChange = (tabName) => {
@@ -353,6 +342,10 @@ export default function PricingSection() {
         </div>
 
       </div>
+
+      {checkoutPlan && (
+        <CheckoutModal plan={checkoutPlan} onClose={() => setCheckoutPlan(null)} />
+      )}
     </section>
   );
 }
